@@ -29,8 +29,38 @@
     <h3>@property.StreetName</h3>
     <p>@property.NumberOfBedrooms bedroom @property.PropertyType</p>
     <p>@property.Description</p>
+    if (!string.IsNullOrEmpty(@property.OfferStatus))
+    {
+        <br />
+        if (@property.OfferStatus.Equals(OrangeBricks.Web.Models.OfferStatus.Pending.ToString()))
+        {
+            <p><strong>Offer Status : @property.OfferStatus</strong></p>
 
-    <a href="@Url.Action("MakeOffer", "Property", new {id = property.Id})" class="btn btn-primary">
-        Make Offer
-    </a>
+            <a href="@Url.Action("MakeOffer", "Property", new { id = property.Id })" class="btn btn-primary">
+                Make Offer
+            </a>
+        }
+        else if(@property.OfferStatus.Equals(OrangeBricks.Web.Models.OfferStatus.Accepted.ToString()))
+        {
+            <p><strong>Offer Status: @property.OfferStatus @@ @property.OfferStatusDateTime.ToString("dd/MM/yyyy hh:MM")</strong></p>
+        }
+        else
+        {
+            <p><strong>Offer Status: @property.OfferStatus @@ @property.OfferStatusDateTime.ToString("dd/MM/yyyy hh:MM")</strong></p>
+
+            <a href="@Url.Action("MakeOffer", "Property", new { id = property.Id })" class="btn btn-primary">
+                Make Offer
+            </a>
+        }
+    }
+    else
+    {
+        <a href="@Url.Action("BookAppointment", "Property", new { id = property.Id })" class="btn btn-primary">
+            Book Appointment
+        </a>
+
+        <a href="@Url.Action("MakeOffer", "Property", new { id = property.Id })" class="btn btn-primary">
+            Make Offer
+        </a>
+    }
 }

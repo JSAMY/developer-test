@@ -21,8 +21,8 @@ namespace OrangeBricks.Web.Controllers.Property
 
         [Authorize]
         public ActionResult Index(PropertiesQuery query)
-        {
-            var builder = new PropertiesViewModelBuilder(_context);
+        {           
+            var builder = new PropertiesViewModelBuilder(_context, User.Identity.GetUserId());
             var viewModel = builder.Build(query);
 
             return View(viewModel);
@@ -86,10 +86,41 @@ namespace OrangeBricks.Web.Controllers.Property
         public ActionResult MakeOffer(MakeOfferCommand command)
         {
             var handler = new MakeOfferCommandHandler(_context);
+            command.BuyerUserId = User.Identity.GetUserId();
 
             handler.Handle(command);
 
             return RedirectToAction("Index");
         }
+
+        /// <summary>
+        /// To Book an appointment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult BookAppointment(int id)
+        {
+            var builder = new BookAppointmentViewModelBuilder(_context);
+            var viewModel = builder.Build(id);
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// To Book an appointment
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [OrangeBricksAuthorize(Roles = "Buyer")]
+        public ActionResult BookAppointment(BookAppointmentCommand command)
+        {
+            var handler = new BookAppointmentCommandHandler(_context);
+            command.BuyerUserId = User.Identity.GetUserId();
+
+            handler.Handle(command);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

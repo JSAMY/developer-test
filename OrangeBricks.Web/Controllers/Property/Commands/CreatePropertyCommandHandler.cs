@@ -1,4 +1,5 @@
 using OrangeBricks.Web.Models;
+using System;
 
 namespace OrangeBricks.Web.Controllers.Property.Commands
 {
@@ -18,7 +19,9 @@ namespace OrangeBricks.Web.Controllers.Property.Commands
                PropertyType = command.PropertyType,
                StreetName = command.StreetName,
                Description = command.Description,
-               NumberOfBedrooms = command.NumberOfBedrooms
+               NumberOfBedrooms = command.NumberOfBedrooms,
+               CreatedAt = DateTime.Now,
+               UpdatedAt = DateTime.Now
             };
 
             property.SellerUserId = command.SellerUserId;

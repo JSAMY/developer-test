@@ -14,9 +14,11 @@ namespace OrangeBricks.Web.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Amount = c.Int(nullable: false),
                         Property_Id = c.Int(),
+                        BuyerUserId = c.String(nullable: false, maxLength: 128)
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Properties", t => t.Property_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.BuyerUserId)
                 .Index(t => t.Property_Id);
             
         }

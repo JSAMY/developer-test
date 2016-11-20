@@ -14,6 +14,8 @@ namespace OrangeBricks.Web.Migrations
             AddColumn("dbo.Properties", "Seller_Id", c => c.String(nullable: false, maxLength: 128));
             CreateIndex("dbo.Properties", "Seller_Id");
             AddForeignKey("dbo.Properties", "Seller_Id", "dbo.AspNetUsers", "Id", cascadeDelete: true);
+            AddColumn("dbo.Properties", "CreatedAt", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Properties", "UpdatedAt", c => c.DateTime(nullable: false));
         }
         
         public override void Down()

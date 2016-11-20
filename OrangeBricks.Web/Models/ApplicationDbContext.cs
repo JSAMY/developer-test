@@ -1,6 +1,8 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
+using System;
 
 namespace OrangeBricks.Web.Models
 {
@@ -18,6 +20,7 @@ namespace OrangeBricks.Web.Models
 
         public IDbSet<Property> Properties { get; set; }
         public IDbSet<Offer> Offers { get; set; }
+        public IDbSet<Appointment> Appointments { get; set; }
 
         public new void SaveChanges()
         {
@@ -29,7 +32,10 @@ namespace OrangeBricks.Web.Models
     {
         IDbSet<Property> Properties { get; set; }
         IDbSet<Offer> Offers { get; set; }
+        IDbSet<Appointment> Appointments { get; set; }
 
         void SaveChanges();
     }
+
+   
 }

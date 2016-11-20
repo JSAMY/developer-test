@@ -9,8 +9,9 @@ namespace OrangeBricks.Web.Migrations
         {
             DropForeignKey("dbo.Properties", "Seller_Id", "dbo.AspNetUsers");
             DropIndex("dbo.Properties", new[] { "Seller_Id" });
-            AddColumn("dbo.Properties", "SellerUserId", c => c.String(nullable: false));
+            AddColumn("dbo.Properties", "SellerUserId", c => c.String(nullable: false, maxLength: 128));
             DropColumn("dbo.Properties", "Seller_Id");
+            AddForeignKey("dbo.Properties", "SellerUserId", "dbo.AspNetUsers", "Id", cascadeDelete: true);
         }
         
         public override void Down()
