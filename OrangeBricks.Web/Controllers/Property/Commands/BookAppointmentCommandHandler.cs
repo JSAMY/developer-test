@@ -19,23 +19,27 @@ namespace OrangeBricks.Web.Controllers.Property.Commands
         {
             var property = _context.Properties.Find(command.PropertyId);
 
-            var appointment = new Appointment
+            if (property != null)
             {
-                Property_Id = command.PropertyId,
-                AppointmentDateTime = command.AppointmentDateTime,
-                BuyerUserId = command.BuyerUserId,
-                Status = AppointmentStatus.Accepted, // as of now it will be accepted, but it needs to be pending by default and appointment should be accepted by seller/agent in future
-                CreatedAt = DateTime.Now,                
-            };
+                var appointment = new Appointment
+                {
+                    Property_Id = command.PropertyId,
+                    AppointmentDateTime = command.AppointmentDateTime,
+                    BuyerUserId = command.BuyerUserId,
+                    Status = AppointmentStatus.Accepted, // as of now it will be accepted, but it needs to be pending by default and appointment should be accepted by seller/agent in future
+                    CreatedAt = DateTime.Now,
+                };
 
-            if (property.Appointments == null)
-            {
-                property.Appointments = new List<Appointment>();
+                if (property.Appointments == null)
+                {
+                    property.Appointments = new List<Appointment>();
+                }
+
+                property.Appointments.Add(appointment);
+
+                _context.SaveChanges();
             }
-
-            property.Appointments.Add(appointment);
-
-            _context.SaveChanges();
+            
         }
     }
 }
